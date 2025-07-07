@@ -1,0 +1,124 @@
+# Robot Navigation Fine-Tuning Pipeline
+
+**Author:** Isaac Kaplan
+**Advisor:** Dr. Rui Liu
+**Lab** Cognitive Robotics and AI (CRAI)
+**Program:** NSF Research Experiences for Undergraduates (REU)
+
+---
+
+## Overview
+
+This project demonstrates how to fine-tune an OpenAI GPT-4o-based vision model to perform low-level robot navigation tasks. The system is designed to:
+
+* Accept pairs of images ("before" and "after" states from a robot's perspective).
+* Accept a natural language task instruction (e.g., "Place yourself 1 foot away from the box in the corner of the room").
+* Return a sequence of low-level navigational command (e.g., `forward 30\nclockwise 1.2\nfoward 5`).
+
+The model learns spatial awareness from paired visual context and outputs commands that can be directly interpreted by a mobile robot.
+
+---
+
+## Dataset Format
+
+Each training example consists of three files sharing a base name:
+
+```
+0001_before.jpg     # image of the robot's current view
+0001_after.jpg      # image of the desired final view
+0001.txt            # corresponding sequence of low-level command (e.g., "clockwise 0.7\nforward 20\n")
+```
+
+Place all training examples in a single directory.
+
+---
+
+## Installation
+
+```bash
+pip install openai
+```
+
+You must also export your OpenAI API key:
+
+```bash
+export OPENAI_API_KEY=sk-...
+```
+
+---
+
+## Usage
+
+### Step 1: Prepare JSONL dataset
+
+```bash
+python openai_utils.py prepare training_data prepared_data.jsonl
+```
+
+This creates a JSONL file formatted for OpenAI fine-tuning.
+
+### Step 2: Upload training data
+
+```bash
+python openai_utils.py upload prepared_data.jsonl
+```
+
+### Step 3: Launch fine-tuning job
+
+```bash
+python openai_utils.py finetune <file_id>
+```
+
+Replace `<file_id>` with the ID returned by the upload command.
+
+### Step 4: Generate predictions (inference)
+
+```bash
+python openai_utils.py \
+    predict <model_name> current.jpg <task>
+```
+
+Replace `<model_name>` with your fine-tuned model (e.g., `ft:gpt-4o-...`).
+Replace `<task>` with the natural language navigation task (e.g., "go to the wall")
+
+The output will be a commands like:
+
+```
+=> forward 30
+```
+
+---
+
+## Command Schema
+
+The model is instructed to respond with one of the following:
+
+```
+forward <cm>
+backward <cm>
+left <cm>
+right <cm>
+clockwise <rads>
+counterclockwise <rads>
+```
+
+---
+
+## Notes
+
+* This pipeline uses GPT-4o’s vision capabilities.
+* It assumes JPEG images, but formats can be adjusted.
+* During training, only the before/after images and ground-truth command are used.
+* During inference, the human-supplied task is used to guide the model.
+
+---
+
+## Attribution
+
+This pipeline was developed by **Isaac Kaplan**, a participant in the **NSF REU program**, working under the mentorship of **Dr. Rui Liu**.
+
+Supported by the **National Science Foundation (NSF)**.
+
+---
+
+For questions or modifications, please contact the author or supervising lab.

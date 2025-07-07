@@ -1,0 +1,20 @@
+// launching communication on the robot
+roslaunch yahboomcar_bringup bringup.launch
+
+// launching the keyboard control of the robot
+roslaunch yahboomcar_ctrl yahboom_keyboard.launch
+
+// running the python command reader
+python command_excecutor.py
+
+// running the data collection script
+python collect_data.py
+
+// rviz diplay of robot
+roslaunch yahboomcar_description diplay.launch
+
+
+// TO TAKE PHOTOS
+// roscore
+// rosrun usb_cam usb_cam_node _video_device:=/dev/video0 _pixel_format:=yuyv _image_width:=64_image_height:=480 _framerate:=30
+// python3 take_photo.py
