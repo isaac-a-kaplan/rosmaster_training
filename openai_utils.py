@@ -213,8 +213,7 @@ if __name__ == "__main__":
     elif args.cmd == "predict":
         cmd_out = generate_command(
             args.model,
-            Path(args.before_img),
-            Path(args.after_img),
+            Path(args.img),
             args.task,
             temperature=0.07,
         )
