@@ -77,11 +77,6 @@ def main() -> None:
     if not src_cmds.exists():
         raise FileNotFoundError("commands.txt not found.")
 
-    # Root copy
-    root_copy = workdir / f"{idx_str}.txt"
-    shutil.copy2(src_cmds, root_copy)
-    print(f"Copied commands.txt -> {root_copy}")
-
     # Data-dir copy
     DATA_DIR.mkdir(exist_ok=True)
     data_copy = DATA_DIR / f"{idx_str}.txt"
