@@ -17,4 +17,16 @@ roslaunch yahboomcar_description diplay.launch
 // TO TAKE PHOTOS
 // roscore
 // rosrun usb_cam usb_cam_node _video_device:=/dev/video0 _pixel_format:=yuyv _image_width:=64_image_height:=480 _framerate:=30
-// python3 take_photo.py
+// python3 take_photo.pyh
+
+// if rosrun usb_cam doesnt work then
+// sudo lsof /dev/video0
+// sudo kill -9 [PID]
+
+// TO USE collect_data.py
+// In 3 seperate terminals run:
+// roscore
+// rosrun usb_cam usb_cam_node _video_device:=/dev/video0 _pixel_format:=yuyv _image_width:=64_image_height:=480 _framerate:=30
+// roslaunch yahboomcar_bringup bringup.launch
+// then run python collect_data.py
+

@@ -24,9 +24,9 @@ The model learns spatial awareness from paired visual context and outputs comman
 Each training example consists of three files sharing a base name:
 
 ```
-0001_before.jpg     # image of the robot's current view
-0001_after.jpg      # image of the desired final view
-0001.txt            # corresponding sequence of low-level command (e.g., "clockwise 0.7\nforward 20\n")
+00001_before.jpg     # image of the robot's current view
+00001_after.jpg      # image of the desired final view
+00001.txt            # corresponding sequence of low-level command (e.g., "clockwise 0.7\nforward 20\n")
 ```
 
 Place all training examples in a single directory.
@@ -52,7 +52,7 @@ export OPENAI_API_KEY=sk-...
 ### Step 1: Prepare JSONL dataset
 
 ```bash
-python openai_utils.py prepare training_data prepared_data.jsonl
+python openai_utils.py prepare data prepared_data.jsonl
 ```
 
 This creates a JSONL file formatted for OpenAI fine-tuning.

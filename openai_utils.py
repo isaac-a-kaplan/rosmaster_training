@@ -193,7 +193,7 @@ if __name__ == "__main__":
     # fine‑tune
     ft = sp.add_parser("finetune", help="Launch fine-tuning job")
     ft.add_argument("file_id")
-    ft.add_argument("base_model", nargs="?", default="gpt-4o-mini-preview")
+    ft.add_argument("base_model", nargs="?", default="gpt-4.1-2025-04-14")
 
     # predict
     pred = sp.add_parser("predict", help="Generate low-level command from images + task")
