@@ -43,6 +43,8 @@ from typing import List
 
 import openai
 
+OUTPUT_FILE = "generated_commands.txt"
+
 # ---------------------------------------------------------------------------
 # Helpers
 # ---------------------------------------------------------------------------
@@ -217,5 +219,7 @@ if __name__ == "__main__":
             args.task,
             temperature=0.07,
         )
-        print("=>", cmd_out)
+        print(f"writing output to: {OUTPUT_FILE}")
+        with open(OUTPUT_FILE, "w") as f:
+            f.write(cmd_out)
 
