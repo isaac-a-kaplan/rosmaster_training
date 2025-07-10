@@ -37,10 +37,10 @@ def next_index(workdir: Path, width: int = NUMBER_WIDTH) -> int:
     return max_seen + 1
 
 
-def run_script(script: str) -> None:
+def run_script(version, script: str) -> None:
     """Run another Python script and raise on failure."""
     print(f"-> Running {script} …")
-    subprocess.run([PYTHON_EXE, script], check=True)
+    subprocess.run([f"python{version}", script], check=True)
     print(f"Finished {script}")
 
 
@@ -62,14 +62,14 @@ def main() -> None:
     print(f"Starting collection cycle #{idx_str}")
 
     # 1. First image ("before")
-    run_script("take_image.py")
+    run_script(2, "take_image.py")
     rename_and_move_image(RAW_IMAGE, f"{idx_str}_before", DATA_DIR)
 
     # 2. Run commands
-    run_script("run_commands.py")
+    run_script(3, "run_commands.py")
 
     # 3. Second image ("after")
-    run_script("take_image.py")
+    run_script(2, "take_image.py")
     rename_and_move_image(RAW_IMAGE , f"{idx_str}_after", DATA_DIR)
 
     # 4. Archive commands.txt — root + data/

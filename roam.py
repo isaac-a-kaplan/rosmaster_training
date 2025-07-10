@@ -80,16 +80,16 @@ signal.signal(signal.SIGINT, signal_handler)
 
 def random_commands(n):
     commands = ["forward", "backward", "clockwise", "counterclockwise"]
-    distance_commands = ["forward", "backwards"]
+    distance_commands = ["forward", "backward"]
     result = ""
     prev_command = None
     for i in range(n):
-        command = commands(random.randint(0, 3))
+        command = commands[random.randint(0, 3)]
         if command != prev_command:
-            quantity = random.randint(1, 314) / 100 if command in distance_commands else random.randint(1, 10000) / 200
+            quantity = random.randint(10, 314) / 100 if command not in distance_commands else random.randint(1000, 10000) / 200
             result += f"{command} {quantity}\n"
             prev_command = command
-    return result[-1]
+    return result[:-1]
 
 
 def main():

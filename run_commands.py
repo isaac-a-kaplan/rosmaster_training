@@ -73,7 +73,7 @@ class CommandExecutor:
     def _move_forward(self, distance_cm):
         """Move forward specified distance in cm"""
         distance_m = distance_cm / 100.0
-        duration = distance_m / self.linear_speed
+        duration = distance_m / self.linear_speed + 0.5
         
         self.cmd_vel.linear.x = self.linear_speed
         self.cmd_vel.angular.z = 0
