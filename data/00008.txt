@@ -1,2 +1,2 @@
-clockwise 5.1
-backward 80.34
+forward 87.51
+counterclockwise 5.4

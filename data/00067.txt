@@ -1,0 +1,3 @@
+backward 51.4
+counterclockwise 2.82
+backward 87.67

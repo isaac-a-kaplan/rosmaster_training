@@ -1,1 +1,1 @@
-backward 39.9
+clockwise 5.9
