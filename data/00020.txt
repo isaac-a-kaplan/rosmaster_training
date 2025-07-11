@@ -1,3 +1,0 @@
-clockwise 2.5
-forward 25.165
-counterclockwise 1.68

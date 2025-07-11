@@ -1,2 +1,0 @@
-clockwise 1.38
-forward 38.66

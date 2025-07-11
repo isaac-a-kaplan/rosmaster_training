@@ -1,2 +1,0 @@
-forward 6.23
-clockwise 1.8

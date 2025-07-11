@@ -1,2 +1,0 @@
-backward 11.295
-counterclockwise 1.32

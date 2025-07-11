@@ -1,2 +1,0 @@
-backward 8.04
-clockwise 0.88

@@ -1,2 +1,0 @@
-backward 18.67
-counterclockwise 3.04

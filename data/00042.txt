@@ -1,2 +1,0 @@
-counterclockwise 1.01
-forward 44.265

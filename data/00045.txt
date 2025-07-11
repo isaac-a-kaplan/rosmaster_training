@@ -1,2 +1,0 @@
-clockwise 1.69
-counterclockwise 0.96

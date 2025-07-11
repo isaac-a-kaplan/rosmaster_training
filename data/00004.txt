@@ -1,1 +1,3 @@
-backward 27.36
+backward 12.85
+clockwise 5.92
+forward 92.94
