@@ -86,7 +86,7 @@ def random_commands(n):
     for i in range(n):
         command = commands[random.randint(0, 3)]
         if command != prev_command:
-            quantity = random.randint(10, 314) / 100 if command not in distance_commands else random.randint(1000, 10000) / 200
+            quantity = random.randint(10, 314) / 50 if command not in distance_commands else random.randint(1000, 10000) / 100
             result += f"{command} {quantity}\n"
             prev_command = command
     return result[:-1]
