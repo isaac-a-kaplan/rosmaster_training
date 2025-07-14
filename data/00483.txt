@@ -1,0 +1,2 @@
+counterclockwise 6.12
+clockwise 4.0

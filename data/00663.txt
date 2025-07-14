@@ -1,0 +1,1 @@
+counterclockwise 0.6

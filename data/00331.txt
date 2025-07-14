@@ -1,0 +1,2 @@
+backward 19.44
+clockwise 2.24

@@ -1,0 +1,2 @@
+counterclockwise 0.52
+clockwise 4.2

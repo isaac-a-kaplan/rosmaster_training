@@ -1,0 +1,3 @@
+backward 78.9
+forward 14.12
+backward 93.97

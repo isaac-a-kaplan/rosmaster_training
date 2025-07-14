@@ -1,0 +1,2 @@
+clockwise 3.9
+backward 86.37
