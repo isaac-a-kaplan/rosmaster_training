@@ -112,22 +112,44 @@ def build_dataset(images_dir: Path, out_jsonl: Path) -> None:
 # ---------------------------------------------------------------------------
 
 def upload_file(path: Path) -> str:
-    """Upload a JSONL file and return its file_id."""
-    resp = openai.files.create(file=open(path, "rb"), purpose="fine-tune")
-    file_id = resp.id
-    print(f"Uploaded {path} as file_id={file_id}")
-    return file_id
+    """Upload the JSONL files and save the file_ids."""
+    
+    folder_path = "prepared_data"
+    file_ids = ""
+    with os.scandir(folder_path) as files:
+        for file in files:
+            resp = openai.files.create(file=open(file.path, "rb"), purpose="fine-tune")
+            file_id = resp.id
+            print(f"Uploaded {path} as file_id={file_id}")
+            file_ids += file_id + "\n"
+    with open("file_ids.txt", "w") as id_file:
+        id_file.write(file_ids)
+    
 
 
-def launch_finetune(file_id: str, base_model: str) -> str:
-    """Kick off the fine-tuning job and return job_id."""
-    resp = openai.fine_tuning.jobs.create(
-        training_file=file_id,
-        model=base_model,
-    )
+def launch_finetune(file_ids: list[str], base_model: str) -> str:
+    """Kick off the fine-tuning job with multiple training files and return job_id."""
+    if not file_ids:
+        raise ValueError("No training files provided.")
+    # For now, openai is only accepting one file at a 100 MB limit 
+    if len(file_ids) == 1 or True:
+        # Only one file — no need to use additional_training_files
+        resp = openai.fine_tuning.jobs.create(
+            training_file=file_ids[0],
+            model=base_model,
+        )
+    else:
+        # First file is the main one, rest go in additional_training_files
+        resp = openai.fine_tuning.jobs.create(
+            training_file=file_ids[0],
+            additional_training_files=file_ids[1:],
+            model=base_model,
+        )
+    
     job_id = resp.id
     print(f"Launched fine-tune job {job_id} -> based on {base_model}")
     return job_id
+
 
 
 def wait_for_job(job_id: str, poll_seconds: int = 30) -> str:
@@ -194,7 +216,6 @@ if __name__ == "__main__":
 
     # fine‑tune
     ft = sp.add_parser("finetune", help="Launch fine-tuning job")
-    ft.add_argument("file_id")
     ft.add_argument("base_model", nargs="?", default="gpt-4.1-2025-04-14")
 
     # predict
@@ -210,11 +231,21 @@ if __name__ == "__main__":
     elif args.cmd == "upload":
         upload_file(Path(args.jsonl))
     elif args.cmd == "finetune":
-        job = launch_finetune(args.file_id, args.base_model)
+        with open("file_ids.txt", "r") as ids_file:
+            file_ids = ids_file.read().splitlines()
+        job = launch_finetune(file_ids, args.base_model)
         wait_for_job(job)
     elif args.cmd == "predict":
+        if args.model == "base":
+            model = "gpt-4.1-2025-04-14"
+        elif args.model == "fine-tuned":
+            with open("current_model.txt", "r") as model_file:
+                model = model_file.read()
+        else:
+            raise RuntimeError(f"model needs to be either 'base' or 'fine-tuned', got {args.model} ")
+        print(f"proceeding with model: {model}")
         cmd_out = generate_command(
-            args.model,
+            model,
             Path(args.img),
             args.task,
             temperature=0.07,

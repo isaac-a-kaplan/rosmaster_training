@@ -66,7 +66,7 @@ python openai_utils.py upload prepared_data.jsonl
 ### Step 3: Launch fine-tuning job
 
 ```bash
-python openai_utils.py finetune <file_id>
+python openai_utils.py finetune
 ```
 
 Replace `<file_id>` with the ID returned by the upload command.
